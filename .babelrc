@@ -8,5 +8,8 @@
         "transform-react-jsx-source"
       ]
     }
-  }
+  },
+  "plugins": [
+   ["import", { "libraryName": "antd-mobile" }]
+ ]
 }
