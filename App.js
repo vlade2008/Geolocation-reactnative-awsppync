@@ -11,22 +11,22 @@ import Route from './src/route'
 
 
 
-console.disableYellowBox = true;
+// console.disableYellowBox = true;
 
-const client = new AWSAppSyncClient({
-  url: awsconfig.graphqlEndpoint,
-  region: awsconfig.region,
-  auth: {type: AUTH_TYPE.API_KEY, apiKey: awsconfig.apiKey}
-});
+  const client = new AWSAppSyncClient({
+    url: awsconfig.graphqlEndpoint,
+    region: awsconfig.region,
+    auth: {type: AUTH_TYPE.API_KEY, apiKey: awsconfig.apiKey}
+  });
 
 
 
-const App = () => (
-<ApolloProvider client={client}>
-    <Rehydrated>
-        <Route />
-    </Rehydrated>
-</ApolloProvider>
-);
+  const App = () => (
+    <ApolloProvider client={client}>
+        <Rehydrated>
+            <Route />
+        </Rehydrated>
+    </ApolloProvider>
+  );
 
-export default App;
+  export default App;
