@@ -46,7 +46,7 @@ export default class AllEvents extends Component {
         return (
             (
                 <Swipeout right={swipeoutBtns}
-                    key={event.id} 
+                    key={event.id}
                     style={styles.swipableItem}
                     autoClose={true}>
                     <View style={styles.item}>
@@ -76,7 +76,7 @@ export default class AllEvents extends Component {
 
         return (
             <View style={styles.allEventPageStyle}>
-                <ScrollView contentContainerStyle={styles.scroller} 
+                <ScrollView contentContainerStyle={styles.scroller}
                     refreshing={true}>
                     <View style={styles.container}>
                         {[].concat(events).sort((a, b) => moment.utc(b.when) - moment.utc(a.when)).map(this.renderEvents)}

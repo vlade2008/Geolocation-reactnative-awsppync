@@ -29,8 +29,8 @@ _button = function(navigation){
   }
 }
 
-const App = StackNavigator({
-  AllEvents : { 
+const AppStacknavigator = StackNavigator({
+  AllEvents : {
     screen : (props) => <AllEventWithData {...props}/>,
     navigationOptions: ({navigation}) => ({
       title: 'Upcoming Events',
@@ -61,15 +61,15 @@ const App = StackNavigator({
   }
 });
 
-const WithProvider = () => (
+const App = () => (
 <ApolloProvider client={client}>
     <Rehydrated>
-        <App />
+        <AppStacknavigator />
     </Rehydrated>
 </ApolloProvider>
 );
 
-export default WithProvider;
+export default App;
 
 const AllEventWithData = compose(
   graphql(ListEvents, {
