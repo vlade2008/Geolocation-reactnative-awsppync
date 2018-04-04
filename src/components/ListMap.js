@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { Ionicons ,MaterialIcons,MaterialCommunityIcons} from '@expo/vector-icons';
 import {computeSize} from '../utils/DeviceRatio'
 
+import { graphql, compose } from 'react-apollo';
+import Businesses from '../queries/Businesses'
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -59,6 +61,8 @@ class ListMap extends Component {
 
   render() {
 
+     console.log(this.props);
+
     let data = [
       {
         id:'1',
@@ -96,4 +100,18 @@ class ListMap extends Component {
   }
 }
 
-export default ListMap
+const AllBusinessWithdata = compose(
+  graphql(Businesses, {
+      options: {
+        fetchPolicy: 'cache-and-network'
+      },
+      props: (props) => {
+        ({
+          businesses: props.data.listBusinesses ? props.data.listBusinesses.items : [],
+        })
+      }
+  }),
+)(ListMap)
+
+
+export default AllBusinessWithdata
