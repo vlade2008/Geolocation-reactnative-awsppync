@@ -23,6 +23,8 @@
   "dependencies": {
     "antd-mobile": "^2.1.8",
     "apollo-cache-inmemory": "^1.1.12",
+    "aws-amplify": "^0.2.14",
+    "aws-amplify-react-native": "^0.2.7",
     "aws-appsync": "^1.0.3",
     "aws-appsync-react": "^1.0.2",
     "aws-sdk": "^2.173.0",
@@ -35,6 +37,7 @@
     "react-native-device-detection": "^0.2.0",
     "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-swipeout": "^2.3.3",
-    "react-navigation": "^1.0.0-beta.22"
+    "react-navigation": "^1.0.0-beta.22",
+    "uuid": "^3.2.1"
   }
 }

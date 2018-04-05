@@ -11,12 +11,24 @@ import Route from './src/route'
 
 
 
+import Amplify, { Auth } from 'aws-amplify'
+import { withAuthenticator } from 'aws-amplify-react-native';
+import AWSConfig from './aws-exports'
+import AppSync from './AppSync'
+
+
+Amplify.configure(AWSConfig)
+
+
 // console.disableYellowBox = true;
 
   const client = new AWSAppSyncClient({
-    url: awsconfig.graphqlEndpoint,
-    region: awsconfig.region,
-    auth: {type: AUTH_TYPE.API_KEY, apiKey: awsconfig.apiKey}
+    url: AppSync.graphqlEndpoint,
+    region: AppSync.region,
+    auth: {
+      type: 'AMAZON_COGNITO_USER_POOLS',
+      jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken(),
+    }
   });
 
 
@@ -29,4 +41,4 @@ import Route from './src/route'
     </ApolloProvider>
   );
 
-  export default App;
+  export default App

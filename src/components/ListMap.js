@@ -61,7 +61,7 @@ class ListMap extends Component {
 
   render() {
 
-     console.log(this.props);
+     // console.log(this.props);
 
     let data = [
       {
@@ -99,19 +99,19 @@ class ListMap extends Component {
     );
   }
 }
+//
+// const AllBusinessWithdata = compose(
+//   graphql(Businesses, {
+//       options: {
+//         fetchPolicy: 'cache-and-network'
+//       },
+//       props: (props) => {
+//         ({
+//           businesses: props.data.listBusinesses ? props.data.listBusinesses.items : [],
+//         })
+//       }
+//   }),
+// )(ListMap)
 
-const AllBusinessWithdata = compose(
-  graphql(Businesses, {
-      options: {
-        fetchPolicy: 'cache-and-network'
-      },
-      props: (props) => {
-        ({
-          businesses: props.data.listBusinesses ? props.data.listBusinesses.items : [],
-        })
-      }
-  }),
-)(ListMap)
 
-
-export default AllBusinessWithdata
+export default ListMap

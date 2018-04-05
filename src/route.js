@@ -79,7 +79,7 @@ const AppTabNavigator = TabNavigator(
 const Route = StackNavigator({
   Home:{
     screen:AppTabNavigator
-    }
+    },
   },
   {
     initialRouteName:'Home',
