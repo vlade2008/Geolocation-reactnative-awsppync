@@ -1,8 +1,13 @@
 import React from 'react';
-import {  Text, View, Button, Platform } from 'react-native';
+import {  Platform ,TouchableOpacity,Text} from 'react-native';
 import { graphql, compose } from 'react-apollo';
-import { StackNavigator,TabNavigator,TabBarBottom } from 'react-navigation';
-
+import { StackNavigator,TabNavigator,TabBarBottom ,NavigationActions} from 'react-navigation';
+import {computeSize} from './utils/DeviceRatio'
+import { Auth } from 'aws-amplify';
+///ui components
+import { Modal} from 'antd-mobile';
+import { Ionicons} from '@expo/vector-icons';
+const alert = Modal.alert;
 
 //compose
 import AllEventWithData from './compose/AllEventWithData'
@@ -13,8 +18,45 @@ import About from './components/About'
 import MapPage from './components/MapPage'
 import ListMap from './components/ListMap'
 
+//Login Component
+import Login from './components/Auth/Login'
+import Signup from './components/Auth/Signup'
 
 
+
+
+ _logout =  function(navigation){
+  return(<TouchableOpacity onPress={this._confirm(navigation)}><Ionicons name="ios-log-out" size={computeSize(60)} style={{marginRight:computeSize(20)}}/></TouchableOpacity>)
+}
+
+_confirm = function(navigation){
+  return ()=>{
+    alert('Logout', 'Are you sure???', [
+      { text: 'Cancel', onPress: () => console.log('cancel'), style: 'default' },
+      { text: 'OK', onPress: () =>{this._signout(navigation)} },
+    ]);
+  }
+
+}
+
+_signout = function(navigation){
+  Auth.signOut()
+    .then(data =>{
+       console.log(data,'sucess signout')
+       console.log(navigation,'unsa navigation niya ane gd');
+
+       const newAction = NavigationActions.reset({
+           index: 0,
+           actions: [
+               NavigationActions.navigate({routeName: 'Auth'})
+           ]
+       });
+
+       navigation.dispatch(newAction)
+
+    })
+    .catch(err => console.log(err,'error signout'));
+}
 
 // _button = function(navigation){
 //   if(Platform.OS === 'ios'){
@@ -76,13 +118,38 @@ const AppTabNavigator = TabNavigator(
   }
 )
 
+const AuthNavigator = TabNavigator(
+  {
+    Login:{screen:Login},
+    Signup:{screen:Signup}
+  },
+
+  {
+    initialRouteName:'Login',
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    swipeEnabled: true,
+    animationEnabled: true,
+    lazyLoad: true,
+    tabBarOptions: {
+      activeTintColor: Platform.OS === 'ios' ? '#2196F3' : '#fff',
+    },
+  }
+)
+
 const Route = StackNavigator({
   Home:{
-    screen:AppTabNavigator
+      screen:AppTabNavigator,
+      navigationOptions: ({navigation}) => ({
+            headerRight: this._logout(navigation)
+          })
+    },
+  Auth:{
+      screen:AuthNavigator
     },
   },
   {
-    initialRouteName:'Home',
+    initialRouteName:'Auth',
     headerMode: 'float'
   })
 
