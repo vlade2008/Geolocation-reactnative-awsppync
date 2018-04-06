@@ -153,4 +153,6 @@ const Route = StackNavigator({
     headerMode: 'float'
   })
 
+
+
 export default Route;

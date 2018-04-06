@@ -159,6 +159,7 @@ class Signup extends Component {
                       <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Password</Text>
                     </WingBlank>
                     <InputItem
+                      type={"password"}
                       autoCorrect={false}
                       autoCapitalize={'none'}
                       returnKeyType={'next'}
@@ -184,7 +185,7 @@ class Signup extends Component {
                       <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Phone</Text>
                     </WingBlank>
                     <InputItem
-                      type={'number'}
+                      type={'digit'}
                       autoCorrect={false}
                       autoCapitalize={'none'}
                       returnKeyType={'next'}

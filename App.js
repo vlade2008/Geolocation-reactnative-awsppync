@@ -22,15 +22,20 @@ Amplify.configure(AWSConfig)
 
 // console.disableYellowBox = true;
 
+  // const client = new AWSAppSyncClient({
+  //   url: AppSync.graphqlEndpoint,
+  //   region: AppSync.region,
+  //   auth: {
+  //     type: 'AMAZON_COGNITO_USER_POOLS',
+  //     jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken(),
+  //   }
+  // });
+
   const client = new AWSAppSyncClient({
     url: AppSync.graphqlEndpoint,
     region: AppSync.region,
-    auth: {
-      type: 'AMAZON_COGNITO_USER_POOLS',
-      jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken(),
-    }
+    auth: {type: AppSync.authenticationType, apiKey: AppSync.apiKey}
   });
-
 
 
   const App = () => (

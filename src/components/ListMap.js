@@ -99,19 +99,21 @@ class ListMap extends Component {
     );
   }
 }
-//
-// const AllBusinessWithdata = compose(
-//   graphql(Businesses, {
-//       options: {
-//         fetchPolicy: 'cache-and-network'
-//       },
-//       props: (props) => {
-//         ({
-//           businesses: props.data.listBusinesses ? props.data.listBusinesses.items : [],
-//         })
-//       }
-//   }),
-// )(ListMap)
 
 
-export default ListMap
+const AllBusinessWithdata = compose(
+  graphql(Businesses, {
+      options: {
+        fetchPolicy: 'cache-and-network'
+      },
+      props: (props) => {
+        console.log(props,'haha');
+        // ({
+        //   businesses: props.data.listBusinesses ? props.data.listBusinesses.items : [],
+        // })
+      }
+  }),
+)(ListMap)
+
+
+export default AllBusinessWithdata
