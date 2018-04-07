@@ -9,6 +9,8 @@ query ListBusinesses {
         name
         description
         address
+        id
+        type
       }
     }
 }`;

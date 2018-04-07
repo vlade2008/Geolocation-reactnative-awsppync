@@ -5,12 +5,16 @@ import { List,WingBlank,WhiteSpace,SearchBar,Flex } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Ionicons ,MaterialIcons,MaterialCommunityIcons} from '@expo/vector-icons';
 import {computeSize} from '../utils/DeviceRatio'
-
+import _ from 'lodash'
 import { graphql, compose } from 'react-apollo';
 import Businesses from '../queries/Businesses'
 
 const Item = List.Item;
 const Brief = Item.Brief;
+
+
+const restaurantIcon = <MaterialIcons name={"restaurant"} size={computeSize(60)}  color={'red'} />
+const cafeeIcon = <MaterialCommunityIcons name={"coffee"} size={computeSize(60)}  color={'green'}/>
 
 class ListMap extends Component {
 
@@ -23,8 +27,6 @@ class ListMap extends Component {
       )
     }
   }
-
-
 
   _renderItem = (item) =>{
       return(
@@ -45,7 +47,11 @@ class ListMap extends Component {
                         <Text style={{fontSize:computeSize(25)}}>{item.address}</Text>
                       </Flex.Item>
                       <Flex.Item style={{flex:0.5}}>
-                        {item.iconRender}
+                        {
+                          _.includes(item.type,'caffe') ? (
+                            cafeeIcon
+                          ): restaurantIcon
+                        }
                       </Flex.Item>
                     </Flex>
                   </Flex.Item>
@@ -61,35 +67,12 @@ class ListMap extends Component {
 
   render() {
 
-     // console.log(this.props);
-
-    let data = [
-      {
-        id:'1',
-        name:'Bohol Avenue',
-        price:'12,000',
-        description:'Restaurant',
-        address:'Philipines',
-        iconRender:(<MaterialIcons name={"restaurant"} size={computeSize(60)}  color={'red'} />)
-      },
-      {
-        id:'2',
-        name:'Dauis Resort',
-        price:'50,000',
-        description:'Coffee',
-        address:'Malaysia',
-        iconRender:(<MaterialCommunityIcons name={"coffee"} size={computeSize(60)}  color={'green'}/>)
-      }
-    ]
-
-
-
     return (
       <View style={{flex:1}}>
         <SearchBar placeholder="Search" maxLength={8} />
 
         <FlatList
-          data={data}
+          data={this.props.businesses}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) => this._renderItem(item)}
          />
@@ -107,7 +90,9 @@ const AllBusinessWithdata = compose(
         fetchPolicy: 'cache-and-network'
       },
       props: (props) => {
-        console.log(props,'haha');
+        return {
+          businesses:props.data.listBusinesses.items ? props.data.listBusinesses.items : []
+        }
         // ({
         //   businesses: props.data.listBusinesses ? props.data.listBusinesses.items : [],
         // })

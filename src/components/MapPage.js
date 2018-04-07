@@ -22,10 +22,10 @@ class MapPage extends Component {
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          longitudeDelta: 0.02145766949155359,
+           latitude: 9.64197507929326,
+           longitude: 123.8631708624005,
+           latitudeDelta: 0.02030836771244537
         }}
       />
     );
