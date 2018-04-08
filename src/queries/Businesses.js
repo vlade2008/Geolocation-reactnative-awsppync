@@ -11,6 +11,8 @@ query ListBusinesses {
         address
         id
         type
+        latitude
+        longitude
       }
     }
 }`;

@@ -32,6 +32,7 @@ class ListMap extends Component {
       return(
 
         <View style={{flex:1,marginTop:computeSize(10)}}>
+
           <WingBlank>
             <Item style={{borderRadius:computeSize(10)}}>
                 <Flex>
@@ -62,17 +63,17 @@ class ListMap extends Component {
       )
   }
 
-  _keyExtractor = (item, index) => item.id;
+  _keyExtractor = (item, index) => index;
+
 
 
   render() {
-
     return (
       <View style={{flex:1}}>
         <SearchBar placeholder="Search" maxLength={8} />
 
         <FlatList
-          data={this.props.businesses}
+          data={this.props.businesses || []}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) => this._renderItem(item)}
          />
@@ -90,8 +91,9 @@ const AllBusinessWithdata = compose(
         fetchPolicy: 'cache-and-network'
       },
       props: (props) => {
+
         return {
-          businesses:props.data.listBusinesses.items ? props.data.listBusinesses.items : []
+          businesses:_.isEmpty(props.data) || _.isEmpty(props.data.listBusinesses) ? [] : props.data.listBusinesses.items
         }
         // ({
         //   businesses: props.data.listBusinesses ? props.data.listBusinesses.items : [],

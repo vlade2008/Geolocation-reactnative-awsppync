@@ -81,7 +81,7 @@ class Signup extends Component {
     })
     .then(data =>{
         this.onConfirmComponent();
-        console.log(data,'unsay return niya');
+        // console.log(data,'unsay return niya');
     })
     .catch(err => {
       console.log(err,'unsa cath niya');

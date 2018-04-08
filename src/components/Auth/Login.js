@@ -63,7 +63,7 @@ class Login extends Component {
   onSignIn = () =>{
     Auth.signIn(this.state.username, this.state.password)
       .then(user =>{
-         console.log(user,'success login')
+         // console.log(user,'success login')
          // this.props.navigation.navigate('Home')
         this.onLoading()
          this.onHomeNavigation()
