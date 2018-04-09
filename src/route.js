@@ -1,12 +1,12 @@
 import React from 'react';
 import {  Platform ,TouchableOpacity,Text} from 'react-native';
 import { graphql, compose } from 'react-apollo';
-import { StackNavigator,TabNavigator,TabBarBottom ,NavigationActions} from 'react-navigation';
+import { StackNavigator,TabNavigator,TabBarBottom ,NavigationActions,DrawerNavigator} from 'react-navigation';
 import {computeSize} from './utils/DeviceRatio'
 import { Auth } from 'aws-amplify';
 ///ui components
 import { Modal} from 'antd-mobile';
-import { Ionicons} from '@expo/vector-icons';
+import { Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
 const alert = Modal.alert;
 
 //compose
@@ -22,11 +22,20 @@ import ListMap from './components/ListMap'
 import Login from './components/Auth/Login'
 import Signup from './components/Auth/Signup'
 
+//chat components
+import ChatPage from './components/ChatPage'
+
+import Test from './components/Test'
+
 
 
 
  _logout =  function(navigation){
   return(<TouchableOpacity onPress={this._confirm(navigation)}><Ionicons name="ios-log-out" size={computeSize(60)} style={{marginRight:computeSize(20)}}/></TouchableOpacity>)
+}
+
+_openDrawer = function(navigation){
+  return(<TouchableOpacity onPress={()=>{navigation.navigate('DrawerToggle')}} ><Ionicons name="ios-menu" size={computeSize(60)} style={{marginLeft:computeSize(20)}}/></TouchableOpacity>)
 }
 
 _confirm = function(navigation){
@@ -137,11 +146,28 @@ const AuthNavigator = TabNavigator(
   }
 )
 
+const HomeDrawerNavigator = DrawerNavigator({
+  Home:{
+    screen:AppTabNavigator,
+    navigationOptions:({navigation})=>({
+
+      drawerLabel: 'Home'
+    })
+  },
+  Chat:{
+    screen:ChatPage,
+    navigationOptions:({navigation})=>({
+      drawerLabel: 'Chat'
+    })
+  }
+})
+
 const Route = StackNavigator({
   Home:{
-      screen:AppTabNavigator,
+      screen:HomeDrawerNavigator,
       navigationOptions: ({navigation}) => ({
-            headerRight: this._logout(navigation)
+            headerRight: this._logout(navigation),
+            headerLeft: this._openDrawer(navigation)
           })
     },
   Auth:{
@@ -149,7 +175,7 @@ const Route = StackNavigator({
     },
   },
   {
-    initialRouteName:'Auth',
+    initialRouteName:'Home',
     headerMode: 'float'
   })
 
