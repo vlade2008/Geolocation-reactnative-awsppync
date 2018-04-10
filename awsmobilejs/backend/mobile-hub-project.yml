@@ -1,4 +1,6 @@
 --- !com.amazonaws.mobilehub.v0.Project 
+apps:
+  react-native: !com.amazonaws.mobilehub.v0.AppDO {}
 features:
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
