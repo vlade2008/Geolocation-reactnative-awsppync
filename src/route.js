@@ -115,7 +115,7 @@ const AppTabNavigator = TabNavigator(
 
   },
   {
-    initialRouteName:'ListMap',
+    initialRouteName:'About',
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     swipeEnabled: true,
@@ -175,7 +175,7 @@ const Route = StackNavigator({
     },
   },
   {
-    initialRouteName:'Home',
+    initialRouteName:'Auth',
     headerMode: 'float'
   })
 
