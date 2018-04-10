@@ -22,6 +22,9 @@ yarn || npm i
   npm run android - for android
   
   ```
+  
+### Demo
+https://expo.io/@christianjohnsaclao/geolocation-aws-appysnc-christian
 
 ### SCHEMA
 
