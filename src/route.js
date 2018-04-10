@@ -147,20 +147,26 @@ const AuthNavigator = TabNavigator(
 )
 
 const HomeDrawerNavigator = DrawerNavigator({
-  Home:{
-    screen:AppTabNavigator,
-    navigationOptions:({navigation})=>({
-
-      drawerLabel: 'Home'
-    })
-  },
-  Chat:{
-    screen:ChatPage,
-    navigationOptions:({navigation})=>({
-      drawerLabel: 'Chat'
-    })
+    Main:{
+      screen:AppTabNavigator,
+      navigationOptions:({navigation})=>({
+        drawerLabel: 'Home'
+      })
+    },
+    Chats:{
+      screen:ChatPage,
+      navigationOptions:({navigation})=>({
+        drawerLabel: 'Chat'
+      })
+    }
+  },{
+    initialRouteName:'Main',
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    drawerToggleRoute: 'DrawerToggle'
   }
-})
+
+)
 
 const Route = StackNavigator({
   Home:{
