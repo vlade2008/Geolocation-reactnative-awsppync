@@ -13,6 +13,8 @@ query ListBusinesses {
         type
         latitude
         longitude
+        latitudeDelta
+        longitudeDelta
       }
     }
 }`;

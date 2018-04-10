@@ -1,22 +1,36 @@
 import React, { Component } from 'react';
 import { Text, View,ScrollView,FlatList } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-import { List,WingBlank,WhiteSpace,SearchBar,Flex } from 'antd-mobile'
+import { List,WingBlank,WhiteSpace,SearchBar,Flex,Modal } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Ionicons ,MaterialIcons,MaterialCommunityIcons} from '@expo/vector-icons';
 import {computeSize} from '../utils/DeviceRatio'
 import _ from 'lodash'
 import { graphql, compose } from 'react-apollo';
 import Businesses from '../queries/Businesses'
+import { MapView } from 'expo';
+
 
 const Item = List.Item;
 const Brief = Item.Brief;
 
 
 const restaurantIcon = <MaterialIcons name={"restaurant"} size={computeSize(60)}  color={'red'} />
-const cafeeIcon = <MaterialCommunityIcons name={"coffee"} size={computeSize(60)}  color={'green'}/>
+const cafeeIcon = <MaterialCommunityIcons name={"coffee"} size={computeSize(60)}  color={'gold'}/>
+
+import cafeImg from '../../assets/cafe-icon.png'
+import restaurantImg from '../../assets/restaurant-icon.png'
+
 
 class ListMap extends Component {
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      value:''
+    }
+  }
 
   static navigationOptions = {
     title: 'List',
@@ -28,13 +42,29 @@ class ListMap extends Component {
     }
   }
 
+  componentDidMount(){
+    this.setState({
+      data:this.props.businesses
+    })
+  }
+
+  onSelectBussiness = (item) =>{
+    return ()=>{
+      // console.log(item,'mao ni iyang ge selected na item');
+      this.setState({
+        selectedModal:true,
+        dataSelected:item
+      })
+    }
+  }
+
   _renderItem = (item) =>{
       return(
 
         <View style={{flex:1,marginTop:computeSize(10)}}>
 
           <WingBlank>
-            <Item style={{borderRadius:computeSize(10)}}>
+            <Item style={{borderRadius:computeSize(10)}} onClick={this.onSelectBussiness(item)}>
                 <Flex>
                   <Flex.Item>
                     <Text style={{fontSize:computeSize()}}>{item.name}</Text>
@@ -63,20 +93,114 @@ class ListMap extends Component {
       )
   }
 
+
   _keyExtractor = (item, index) => index;
 
+  onInputSearch = (value) =>{
+    this.setState({
+      value:value
+    })
+  }
 
+  onSubmit = () =>{
+    const searchText  = this.state.value;
+
+    if (_.isEmpty(searchText)) {
+      this.onLoad(this.props.businesses)
+     }else {
+        const reg = new RegExp(searchText, 'gi');
+
+        let data = this.props.businesses.map((record,i)=>{
+          const match = record.name.match(reg);
+          if (!match) {
+            return null;
+          }
+          return {
+            ...record
+          }
+
+        }).filter(record => !!record)
+
+
+        this.onLoad(data)
+     }
+  }
+
+  onLoad = (data) =>{
+    this.setState({data:data})
+  }
+
+  onClose = () =>{
+    this.setState({selectedModal:false})
+  }
 
   render() {
+
     return (
       <View style={{flex:1}}>
-        <SearchBar placeholder="Search" maxLength={8} />
+        <SearchBar
+            value={this.state.value}
+           onChange={this.onInputSearch}
+           onSubmit={this.onSubmit}
+           placeholder="Search" maxLength={8} cancelText="Cancel" />
 
         <FlatList
-          data={this.props.businesses || []}
+          data={this.state.data || []}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) => this._renderItem(item)}
          />
+
+
+         {
+
+           this.state.selectedModal ? (
+             <Modal
+               visible={this.state.selectedModal}
+                transparent
+                maskClosable={false}
+                onClose={this.onClose}
+                footer={[{ text: 'Ok', onPress: () => {this.onClose } }]}
+               >
+
+                 <View>
+                   <Text style={{textAlign:'right',fontSize:computeSize(35),color:'gray'}}>{this.state.dataSelected.name}</Text>
+                   <WhiteSpace/>
+                   <Text style={{textAlign:'right',fontSize:computeSize(35),color:'gray'}}>{this.state.dataSelected.description}</Text>
+                   <WhiteSpace/>
+                   <Text style={{textAlign:'right',fontSize:computeSize(35),color:'gray'}}>{this.state.dataSelected.address}</Text>
+                   <WhiteSpace/>
+
+                   <MapView
+                     style={{width:'100%',height:computeSize(500)}}
+                      region={{
+                        latitude:this.state.dataSelected.latitude,
+                        longitude: this.state.dataSelected.longitude,
+                        latitudeDelta: this.state.dataSelected.latitudeDelta,
+                        longitudeDelta: this.state.dataSelected.longitudeDelta,
+                      }}
+                    >
+                        <MapView.Marker
+                          coordinate={{
+                            latitude:this.state.dataSelected.latitude,
+                            longitude:this.state.dataSelected.longitude
+                          }}
+                          title={this.state.dataSelected.name}
+                          description={this.state.dataSelected.description}
+                          image={
+                            _.includes(this.state.dataSelected.type,'caffe') ? (
+                              cafeImg
+                            ): restaurantImg
+                          }
+                        />
+
+                    </MapView>
+
+                 </View>
+
+             </Modal>
+           ): null
+
+         }
 
       </View>
 

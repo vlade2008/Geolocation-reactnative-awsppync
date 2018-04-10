@@ -115,7 +115,7 @@ const AppTabNavigator = TabNavigator(
 
   },
   {
-    initialRouteName:'About',
+    initialRouteName:'ListMap',
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     swipeEnabled: true,
