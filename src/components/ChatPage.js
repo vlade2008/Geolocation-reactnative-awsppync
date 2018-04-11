@@ -5,13 +5,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Button,Icon,WingBlank,WhiteSpace,List,Flex } from 'antd-mobile'
 import { graphql, compose } from 'react-apollo'
 import {computeSize} from '../utils/DeviceRatio'
+import Businesses from '../queries/Businesses'
 
+import _ from 'lodash'
 
 class ChatPage extends Component {
-
-
-
-
   render() {
     return (
       <View style={{flex:1,backgroundColor:'white'}}>
@@ -32,7 +30,7 @@ class ChatPage extends Component {
 
         <View style={{padding:computeSize(20)}}>
           <View style={{backgroundColor:'#108ee9',padding:computeSize(20),borderRadius:5}}>
-            <Text style={{fontWeight:'bold',color:'white'}}>Thawab</Text>
+            <Text style={{fontWeight:'bold',color:'white'}}>Me</Text>
             <Text style={{color:'white'}}>Gwapo jyd ko kaayo by ngano dli ko kabpogon</Text>
             <WhiteSpace/>
             <Text style={{fontSize:computeSize(20),color:'white'}}>11:32pm </Text>

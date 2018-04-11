@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View,ScrollView,FlatList } from 'react-native';
 import { NavigationActions } from 'react-navigation'
-import { List,WingBlank,WhiteSpace,SearchBar,Flex,Modal } from 'antd-mobile'
+import { List,WingBlank,WhiteSpace,SearchBar,Flex,Modal,Button } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { Ionicons ,MaterialIcons,MaterialCommunityIcons} from '@expo/vector-icons';
 import {computeSize} from '../utils/DeviceRatio'
@@ -159,7 +159,7 @@ class ListMap extends Component {
                 transparent
                 maskClosable={false}
                 onClose={this.onClose}
-                footer={[{ text: 'Ok', onPress: () => {this.onClose } }]}
+
                >
 
                  <View>
@@ -195,6 +195,8 @@ class ListMap extends Component {
 
                     </MapView>
 
+                    <Button type="primary" onClick={this.onClose} style={{marginTop:computeSize(10)}}>Close</Button>
+
                  </View>
 
              </Modal>
@@ -215,7 +217,7 @@ const AllBusinessWithdata = compose(
         fetchPolicy: 'cache-and-network'
       },
       props: (props) => {
-
+        console.log(props,'unsa naa ane niya gd ngano ka?');
         return {
           businesses:_.isEmpty(props.data) || _.isEmpty(props.data.listBusinesses) ? [] : props.data.listBusinesses.items
         }

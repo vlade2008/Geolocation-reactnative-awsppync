@@ -140,8 +140,6 @@ const AllBusinessWithdata = compose(
 
 export default AllBusinessWithdata
 
-// export default MapPage
-
 const styles = StyleSheet.create({
   clusterText: {
     fontSize: 13,
