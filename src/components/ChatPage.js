@@ -18,9 +18,28 @@ class ChatPage extends Component {
 
 
         <List style={{flex:1,justifyContent:'flex-end'}} renderHeader={()=>(
-
-            <Text style={{textAlign:'center',color:'#8c8c8c',marginBottom:computeSize(20)}}>October 24,1994</Text>
+          <Text style={{textAlign:'center',color:'#8c8c8c',marginBottom:computeSize(20)}}>October 24,1994</Text>
         )}>
+
+        <View style={{padding:computeSize(20)}}>
+          <View style={{backgroundColor:'#efefef',padding:computeSize(20),borderRadius:5}}>
+            <Text style={{fontWeight:'bold'}}>Christian</Text>
+            <Text>Gwapo jyd ko kaayo by ngano dli ko kabpogon</Text>
+            <WhiteSpace/>
+            <Text style={{fontSize:computeSize(20)}}>11:32pm </Text>
+          </View>
+        </View>
+
+        <View style={{padding:computeSize(20)}}>
+          <View style={{backgroundColor:'#108ee9',padding:computeSize(20),borderRadius:5}}>
+            <Text style={{fontWeight:'bold',color:'white'}}>Thawab</Text>
+            <Text style={{color:'white'}}>Gwapo jyd ko kaayo by ngano dli ko kabpogon</Text>
+            <WhiteSpace/>
+            <Text style={{fontSize:computeSize(20),color:'white'}}>11:32pm </Text>
+          </View>
+        </View>
+
+
 
         </List>
 
@@ -31,7 +50,7 @@ class ChatPage extends Component {
               <TextInput multiline={true} placeholder="Write a message" style={{marginTop:10,padding:computeSize(5)}}/>
             </Flex.Item>
             <Flex.Item style={{flex:0.1}}>
-              <Button  style={{borderWidth:0}} size="small" inline><MaterialIcons name="send" size={computeSize(60)}  color={'red'} /></Button>
+              <Button  style={{borderWidth:0}} size="small" inline><MaterialIcons name="send" size={computeSize(60)}  color={'#108ee9'} /></Button>
             </Flex.Item>
           </Flex>
 
