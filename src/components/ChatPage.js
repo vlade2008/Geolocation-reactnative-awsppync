@@ -5,12 +5,39 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Button,Icon,WingBlank,WhiteSpace,List,Flex } from 'antd-mobile'
 import { graphql, compose } from 'react-apollo'
 import {computeSize} from '../utils/DeviceRatio'
-import Businesses from '../queries/Businesses'
-
+import CreateConversation from '../mutations/CreateConversation'
+import uuidV4 from 'uuid/v4'
 import _ from 'lodash'
+import moment from 'moment'
 
 class ChatPage extends Component {
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      message:''
+    }
+  }
+
+  onSumbit = ()=>{
+    let payload = {
+      id: uuidV4(),
+      message:this.state.message,
+      createdAt:moment().format('MMMM Do YYYY, h:mm:ss a'),
+      userId:'test',
+      name:'test'
+    }
+    this.props.onAdd(payload)
+
+
+
+  }
+
+
   render() {
+
+
     return (
       <View style={{flex:1,backgroundColor:'white'}}>
 
@@ -45,10 +72,10 @@ class ChatPage extends Component {
 
           <Flex style={{margin:computeSize(20)}}>
             <Flex.Item style={{borderWidth:0.5,borderColor:'#8c8c8c',flex:0.9,borderRadius:computeSize(20)}}>
-              <TextInput multiline={true} placeholder="Write a message" style={{marginTop:10,padding:computeSize(5)}}/>
+              <TextInput onChangeText={(message) => this.setState({message})} multiline={true} placeholder="Write a message" style={{marginTop:10,padding:computeSize(5)}}/>
             </Flex.Item>
             <Flex.Item style={{flex:0.1}}>
-              <Button  style={{borderWidth:0}} size="small" inline><MaterialIcons name="send" size={computeSize(60)}  color={'#108ee9'} /></Button>
+              <Button disabled={_.isEmpty(this.state.message) ? true : false} onClick={this.onSumbit}  style={{borderWidth:0,backgroundColor:'white',opacity:_.isEmpty(this.state.message) ? 0.5: 1}} size="small" inline><MaterialIcons name="send" size={computeSize(60)} color={'#108ee9'}/></Button>
             </Flex.Item>
           </Flex>
 
@@ -61,4 +88,24 @@ class ChatPage extends Component {
   }
 }
 
-export default ChatPage
+// export default ChatPage
+
+export default compose(
+  graphql(CreateConversation,{
+    props: ({props,data}) => (
+        {
+          onAdd : (value)=>{
+            console.log(data,'unsay props niya ane gd');
+            // props.mutate({
+            //   variables:value
+            // })
+          }
+        }
+        // {
+        //   onAdd: city => props.mutate({
+        //     variables: city
+        //   })
+        // }
+    )
+  })
+)(ChatPage)

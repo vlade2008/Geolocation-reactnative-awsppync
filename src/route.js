@@ -160,7 +160,7 @@ const HomeDrawerNavigator = DrawerNavigator({
       })
     }
   },{
-    initialRouteName:'Main',
+    initialRouteName:'Chats',
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',
     drawerToggleRoute: 'DrawerToggle'
@@ -181,7 +181,7 @@ const Route = StackNavigator({
     },
   },
   {
-    initialRouteName:'Auth',
+    initialRouteName:'Home',
     headerMode: 'float'
   })
 
