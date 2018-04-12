@@ -5,21 +5,21 @@ export default gql`
     $id: ID!,
     $userId: String!,
     $name: String!,
-    $message:String,
-    $createdAt:String
+    $message:String!,
+    $createdAt:String!
   ) {
-    createCity(input: {
+    createConversation(input: {
       id: $id,
-      userId: userId,
-      name: name,
-      message:message,
-      created:created
+      userId: $userId,
+      name: $name,
+      message:$message,
+      createdAt:$createdAt
     }) {
       id
       userId
       name
       message
-      created
+      createdAt
     }
   }
 `

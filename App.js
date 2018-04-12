@@ -20,6 +20,17 @@ import AppSync from './AppSync'
 Amplify.configure(AWSConfig)
 
 
+//redux
+
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import logger from "redux-logger";
+import AppReducer from './src/reducers/'
+
+const store = createStore(AppReducer, applyMiddleware(logger));
+
+
+
 // console.disableYellowBox = true;
 
   // const client = new AWSAppSyncClient({
@@ -40,9 +51,11 @@ Amplify.configure(AWSConfig)
 
   const App = () => (
     <ApolloProvider client={client}>
+      <Provider store={store}>
         <Rehydrated>
             <Route />
         </Rehydrated>
+      </Provider>
     </ApolloProvider>
   );
 

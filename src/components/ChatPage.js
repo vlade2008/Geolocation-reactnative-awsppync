@@ -10,6 +10,8 @@ import uuidV4 from 'uuid/v4'
 import _ from 'lodash'
 import moment from 'moment'
 
+import { connect } from 'react-redux'
+
 class ChatPage extends Component {
 
   constructor(props){
@@ -23,12 +25,13 @@ class ChatPage extends Component {
   onSumbit = ()=>{
     let payload = {
       id: uuidV4(),
+      userId:this.props.auth.activeAuth.userId,
+      name:this.props.auth.activeAuth.name,
       message:this.state.message,
-      createdAt:moment().format('MMMM Do YYYY, h:mm:ss a'),
-      userId:'test',
-      name:'test'
+      createdAt:moment().format('MMMM Do YYYY, h:mm:ss a')
+
     }
-    this.props.onAdd(payload)
+     this.props.onAdd(payload)
 
 
 
@@ -90,22 +93,46 @@ class ChatPage extends Component {
 
 // export default ChatPage
 
-export default compose(
-  graphql(CreateConversation,{
-    props: ({props,data}) => (
-        {
-          onAdd : (value)=>{
-            console.log(data,'unsay props niya ane gd');
-            // props.mutate({
-            //   variables:value
-            // })
-          }
-        }
-        // {
-        //   onAdd: city => props.mutate({
-        //     variables: city
-        //   })
-        // }
-    )
-  })
-)(ChatPage)
+// export default compose(
+//   graphql(CreateConversation,{
+//     props: props => (
+//         {
+//           onAdd : (value)=>{
+//             console.log(props,'unsay props niya ane gd');
+//             // props.mutate({
+//             //   variables:value
+//             // })
+//           }
+//         }
+//     )
+//   })
+// )(ChatPage)
+
+const withCloneChat = graphql(CreateConversation,{
+  props: props => (
+    {
+      onAdd:(value)=>{
+        props.mutate({
+            variables: value
+          })
+            .then(({ data }) => {
+              console.log('got data', data);
+            }).catch((error) => {
+              console.log('there was an error sending the query', error);
+            });
+        // props.mutate({
+        //   variables:value
+        // })
+      }
+    }
+  )
+})
+
+ const SubmitConversation = withCloneChat(ChatPage)
+
+ export default Conversation = connect(
+   (state) => ({
+     items:state.items,
+     auth:state.auth
+   })
+ )(SubmitConversation)

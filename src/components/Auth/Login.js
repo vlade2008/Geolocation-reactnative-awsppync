@@ -10,6 +10,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Auth } from 'aws-amplify';
 import _ from 'lodash'
 
+
+//redux
+import * as authActions from '../../actions/authActions';
+
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+
 class Login extends Component {
 
   constructor(props){
@@ -63,10 +70,8 @@ class Login extends Component {
   onSignIn = () =>{
     Auth.signIn(this.state.username, this.state.password)
       .then(user =>{
-         // console.log(user,'success login')
-         // this.props.navigation.navigate('Home')
-        this.onLoading()
-         this.onHomeNavigation()
+         this.onLoading()
+         this.onHomeNavigation(user)
 
       })
       .catch(err => {
@@ -78,11 +83,11 @@ class Login extends Component {
 
   onLoading = () =>{
     this.setState({
-      loading:!this.state.loading
+      loading:false
     })
   }
 
-  onHomeNavigation = () =>{
+  onHomeNavigation = (data) =>{
 
     const newAction = NavigationActions.reset({
         index: 0,
@@ -91,6 +96,14 @@ class Login extends Component {
         ]
     });
 
+
+
+    let payload = {
+      name:data.username,
+      userId:data.pool.clientId
+    }
+
+    this.props.authActions.loginSuccess(payload)
     this.props.navigation.dispatch(newAction)
 
   }
@@ -172,7 +185,22 @@ class Login extends Component {
 }
 
 
-export default Login
+function mapStateToProps(state) {
+    return {
+      auth:state.auth
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        authActions: bindActionCreators(authActions, dispatch)
+    }
+}
+
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
 
 
 const styles = StyleSheet.create({

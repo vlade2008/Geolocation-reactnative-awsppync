@@ -181,7 +181,7 @@ const Route = StackNavigator({
     },
   },
   {
-    initialRouteName:'Home',
+    initialRouteName:'Auth',
     headerMode: 'float'
   })
 
